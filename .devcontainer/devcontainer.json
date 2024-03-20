@@ -1,4 +1,5 @@
 {
 	"name": "Actions to Graph",
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye"
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  "postCreateCommand": ".devcontainer/post-create.sh"
 }
