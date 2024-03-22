@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "actions-to-graph.helloWorld",
-        "title": "Hello World"
+        "command": "actions-to-graph.generateGraph",
+        "title": "Actions to Graph: Generate"
       }
     ]
   },
