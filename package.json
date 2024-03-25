@@ -15,7 +15,8 @@
     "commands": [
       {
         "command": "actions-to-graph.generateGraph",
-        "title": "Actions to Graph: Generate"
+        "category": "Actions to Graph",
+        "title": "Generate"
       }
     ]
   },
