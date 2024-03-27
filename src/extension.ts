@@ -1,26 +1,41 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { parseYAMLtoJSON, generateMermaidSyntax } from './gen-mermaid';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const firstLine = '```mermaid';
+const lastLine = '```';
+
+export function writeFile(extension: string, path: string, content: string, nameOfFile: string) {
+	const fs = require('fs');
+	const pathFile = `${path}/${nameOfFile}.${extension}`;
+	fs.writeFile(pathFile, content, (err: any) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		console.log('File has been created');
+	}
+	);
+}
+
 export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "actions-to-graph" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('actions-to-graph.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from actions-to-graph!');
+	let disposable = vscode.commands.registerCommand('actions-to-graph.generateGraph', async () => {
+		const currentEditor = vscode.window.activeTextEditor;
+		const text = parseYAMLtoJSON(currentEditor?.document.getText() ?? '');
+		const mermaidSyntax = generateMermaidSyntax(text);
+		const mermaidFullContent = `${firstLine}\n${mermaidSyntax}\n${lastLine}`;
+    const fileUri = vscode.Uri.parse('untitled:graph.md');
+    const doc = await vscode.workspace.openTextDocument(fileUri);
+		const editor = await vscode.window.showTextDocument(doc);
+
+    editor.edit(editBuilder => {
+        editBuilder.insert(new vscode.Position(0, 0), mermaidFullContent);
+    });
+    await vscode.window.showTextDocument(doc);
 	});
 
 	context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
