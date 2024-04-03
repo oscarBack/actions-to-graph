@@ -1,10 +1,13 @@
 import * as vscode from 'vscode'
-import { parseYAMLtoJSON, generateMermaidSyntax } from './gen-mermaid'
+import {
+  parseYAMLtoJSON,
+  generateMermaidSyntax
+} from './gen-mermaid'
 
 const firstLine = '```mermaid'
 const lastLine = '```'
 
-export function activate (context: vscode.ExtensionContext) {
+export function activate (context: vscode.ExtensionContext): void {
   console.log('Congratulations, your extension "actions-to-graph" is now active!')
 
   const disposable = vscode.commands.registerCommand('actions-to-graph.generateGraph', async () => {
@@ -16,7 +19,7 @@ export function activate (context: vscode.ExtensionContext) {
     const doc = await vscode.workspace.openTextDocument(fileUri)
     const editor = await vscode.window.showTextDocument(doc)
 
-    editor.edit(editBuilder => {
+    await editor.edit(editBuilder => {
       editBuilder.insert(new vscode.Position(0, 0), mermaidFullContent)
     })
     await vscode.window.showTextDocument(doc)
@@ -25,4 +28,4 @@ export function activate (context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable)
 }
 
-export function deactivate () {}
+export function deactivate (): void {}
