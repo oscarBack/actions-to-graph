@@ -16,6 +16,9 @@ export function generateMermaidSyntax (workflowString: string): string {
   const workflow = typeof workflowString === 'string' ? JSON.parse(workflowString) as Workflow : workflowString
   for (const jobId in workflow.jobs) {
     const job = workflow.jobs[jobId]
+    if (typeof job.name !== 'string') {
+      job.name = jobId
+    }
     const jobName = job.name.replace(/\s+/g, '-')
     mermaidSyntax += `  ${jobName}["${job.name}"]`
 
