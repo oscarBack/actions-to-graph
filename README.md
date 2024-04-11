@@ -10,7 +10,7 @@ This extension:
 
 ### Features
 - Generate a graph with mermaid syntax in a new `graph.md` file.
-
+![Action GIF](action-gif.gif)
 
 ### License
 This project is licensed under the terms of the [MIT license](LICENSE).
