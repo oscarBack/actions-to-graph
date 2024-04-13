@@ -4,13 +4,5 @@ npm install -g ts-standard
 npm i
 
 # Install shared libraries
-# update
-sudo apt-get update -y && sudo apt-get upgrade -y
-sudo apt-get install libasound2 -y
-sudo apt-get -y install libnss3
-sudo aptitude -y install libatk1.0-0
-sudo apt -y install libasound2-plugins-extra
-sudo apt-get -y install libgtk-3-dev
-sudo apt-get -y install libdrm-dev
-sudo apt-get -y install libatk-bridge2.0-0
-sudo apt-get -y install libdbus-1-3
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install -y libasound2 libnss3 libatk1.0-0 libgtk-3-dev libdrm-dev libatk-bridge2.0-0 libdbus-1-3
