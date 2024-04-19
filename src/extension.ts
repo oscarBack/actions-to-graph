@@ -7,7 +7,7 @@ import {
 const firstLine = '```mermaid'
 const lastLine = '```'
 
-export function activate (context: vscode.ExtensionContext): void {
+export async function activate (context: vscode.ExtensionContext): Promise<vscode.ExtensionContext> {
   console.log('Congratulations, your extension "actions-to-graph" is now active!')
 
   const disposable = vscode.commands.registerCommand('actions-to-graph.generateGraph', async () => {
@@ -26,6 +26,7 @@ export function activate (context: vscode.ExtensionContext): void {
   })
 
   context.subscriptions.push(disposable)
+  return context
 }
 
 export function deactivate (): void {}
