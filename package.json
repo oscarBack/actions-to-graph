@@ -1,8 +1,15 @@
 {
   "name": "actions-to-graph",
   "displayName": "actions-to-graph",
-  "description": "",
+  "publisher": "oscarBack",
+  "description": "Generate a markdown file with a graph of your GitHub Action Jobs and its dependencies",
   "version": "0.0.1",
+  "icon": "images/icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oscarBack/actions-to-graph"
+  },
   "engines": {
     "vscode": "^1.87.0"
   },

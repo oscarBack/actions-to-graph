@@ -1,0 +1,24 @@
+name: Test
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo Hello, world!
+  tag:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tag the commit
+        run: echo "Tagging the commit"
+  deploy:
+    needs: tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        run: echo "Deploying to production"
