@@ -1,17 +1,42 @@
 import * as assert from 'assert'
 import { before } from 'node:test'
 import * as fs from 'fs'
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode'
-// import * as myExtension from '../../extension';
 
+// Paths to the files
 const pathYamlBasic1: string = 'src/test/pool_examples/basic_1.yml'
 const pathMdBasic1: string = 'src/test/pool_examples/basic_1.md'
 
+const pathYamlBasic2: string = 'src/test/pool_examples/basic_2.yml'
+const pathMdBasic2: string = 'src/test/pool_examples/basic_2.md'
+
+const pathYamlBasic3: string = 'src/test/pool_examples/basic_3.yml'
+const pathMdBasic3: string = 'src/test/pool_examples/basic_3.md'
+
+// Read the files
 const yamlBasic1 = fs.readFileSync(pathYamlBasic1, 'utf8')
 const mdBasic1 = fs.readFileSync(pathMdBasic1, 'utf8')
+
+const yamlBasic2 = fs.readFileSync(pathYamlBasic2, 'utf8')
+const mdBasic2 = fs.readFileSync(pathMdBasic2, 'utf8')
+
+const yamlBasic3 = fs.readFileSync(pathYamlBasic3, 'utf8')
+const mdBasic3 = fs.readFileSync(pathMdBasic3, 'utf8')
+
+const poolOfTests = [
+  {
+    yml: yamlBasic1,
+    md: mdBasic1
+  },
+  {
+    yml: yamlBasic2,
+    md: mdBasic2
+  },
+  {
+    yml: yamlBasic3,
+    md: mdBasic3
+  }
+]
 
 suite('Extension Test Suite', () => {
   before(async () => {
@@ -22,22 +47,18 @@ suite('Extension Test Suite', () => {
     }
     await extension.activate()
   })
-  test('Sample test', async () => {
-    const yamlEditor = await vscode.workspace.openTextDocument({
-      content: yamlBasic1,
-      language: 'yaml'
-    })
-    // get the content of the yamlEditor
-    const yamlEditorContent = yamlEditor.getText()
-    // console.log('yamlEditorContent', yamlEditorContent)
-    await vscode.window.showTextDocument(yamlEditor)
-    await vscode.commands.executeCommand('actions-to-graph.generateGraph')
-    // get the content of the new document opened
-    const newEditor = vscode.window.activeTextEditor
-    const newEditorContent = newEditor?.document.getText()
-    console.log('newEditorContent', newEditorContent)
-    // assert.strictEqual(newEditorContent, mdBasic1)
-    assert.strictEqual([1, 2, 3].indexOf(5), -1)
-    assert.strictEqual([1, 2, 3].indexOf(0), -1)
+  test('Pool of examples', async () => {
+    for (const pool of poolOfTests) {
+      const yamlEditor = await vscode.workspace.openTextDocument({
+        content: pool.yml,
+        language: 'yaml'
+      })
+      await vscode.window.showTextDocument(yamlEditor)
+      await vscode.commands.executeCommand('actions-to-graph.generateGraph')
+      const newEditor = vscode.window.activeTextEditor
+      const newEditorContent = newEditor?.document.getText()
+      assert.strictEqual(newEditorContent, pool.md)
+      await vscode.commands.executeCommand('workbench.action.closeAllEditors')
+    }
   })
 })
