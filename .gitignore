@@ -2,3 +2,4 @@ node_modules/
 *.log
 out/
 .vscode-test/
+*.vsix
