@@ -12,6 +12,9 @@
 			]
 		}
 	},
+	"mounts": [
+    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+	],
   "postCreateCommand": ".devcontainer/post-create.sh",
 	"remoteUser": "node"
 }
