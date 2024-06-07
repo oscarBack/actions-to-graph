@@ -14,7 +14,9 @@
     "vscode": "^1.87.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Visualization",
+    "Programming Languages"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
