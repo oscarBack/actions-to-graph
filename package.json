@@ -14,7 +14,9 @@
     "vscode": "^1.87.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Visualization",
+    "Programming Languages"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
@@ -48,6 +50,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@action-validator/core": "^0.6.0",
     "yaml": "^2.4.1"
   },
   "ts-standard": {

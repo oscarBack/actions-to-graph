@@ -1,4 +1,5 @@
 import YAML from 'yaml'
+import { ensureError } from './utils/erros'
 
 export interface Job {
   name: string
@@ -45,6 +46,23 @@ export function generateMermaidSyntax (workflowString: string): string {
   return mermaidSyntax
 }
 
-export function parseYAMLtoJSON (yamlContent: string): string {
-  return YAML.parse(yamlContent)
+export function parseYAMLtoJSON (yamlContent: string): any {
+  try {
+    if (yamlContent === '') {
+      throw new Error('The content of the file is empty')
+    }
+    const yamlContentParsed = YAML.parse(yamlContent)
+    if (yamlContentParsed === null) {
+      throw new Error('The content of the file is not a valid YAML')
+    }
+    if (yamlContentParsed.errors !== null &&
+      typeof yamlContentParsed.errors !== 'undefined' &&
+        yamlContentParsed.errors.length > 0
+    ) {
+      throw new Error('The content of the file is not a valid YAML')
+    }
+    return yamlContentParsed
+  } catch (error) {
+    throw ensureError(error)
+  }
 }
