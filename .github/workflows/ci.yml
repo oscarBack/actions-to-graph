@@ -22,7 +22,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
+
+      - name: Compile
+        run: yarn compile
 
       - name: Run tests
-        run: npm run test
+        run: xvfb-run -a yarn test
+        if: runner.os == 'Linux'
+
+      - name: Run tests
+        run: yarn test
+        if: runner.os != 'Linux'
